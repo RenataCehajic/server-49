@@ -1,4 +1,4 @@
-const { user, todoItem, todoList } = require("./models");
+const { user, todoItem, todoList, tag } = require("./models");
 
 async function listsWithUsers() {
   const lists = await todoList.findAll({
@@ -37,7 +37,7 @@ const importantTodos = async () => {
       where: { important: true },
       include: { model: todoList, attributes: ["name"] },
     });
-    console.log(todos.map((item) => item.get({ plain: true })));
+    // console.log(todos.map((item) => item.get({ plain: true })));
   } catch (e) {
     console.log(e.message);
   }
@@ -69,3 +69,16 @@ async function fullUserById(id) {
 }
 
 // fullUserById(1).then((user) => console.log("User with tasks", user));
+
+const itemsWithTags = async () => {
+  try {
+    const items = await todoItem.findAll({
+      include: [tag],
+    });
+    console.log(items.map((item) => item.get({ plain: true })));
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+itemsWithTags();
