@@ -1,27 +1,28 @@
 "use strict";
 const { Model } = require("sequelize");
+const todoitem = require("./todoitem");
 module.exports = (sequelize, DataTypes) => {
-  class user extends Model {
+  class tag extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      user.hasMany(models.todoList);
+      todoItem.belongsToMany(models.todoItem, {
+        through: "itemTags",
+        foreignKey: "tagId",
+      });
     }
   }
-  user.init(
+  tag.init(
     {
-      name: DataTypes.STRING,
-      email: { type: DataTypes.STRING, unique: true },
-      phone: DataTypes.INTEGER,
-      password: DataTypes.STRING,
+      title: DataTypes.STRING,
     },
     {
       sequelize,
-      modelName: "user",
+      modelName: "tag",
     }
   );
-  return user;
+  return tag;
 };
