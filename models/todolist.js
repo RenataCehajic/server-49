@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   todoList.init(
     {
       name: DataTypes.STRING,
+      userId: DataTypes.INTEGER,
     },
     {
       sequelize,
