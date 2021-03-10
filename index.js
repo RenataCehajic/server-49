@@ -56,15 +56,33 @@ app.get("/users/:userId/lists", async (req, res, next) => {
     const user = await User.findByPk(userId, {
       include: [TodoList],
     });
-    if (user) {
-      res.send(user.TodoLists);
-    } else {
+    if (!user) {
       res.status(404).send("User not found");
+    } else {
+      res.send(user.TodoLists);
     }
-  } catch (e) {
-    next(e);
+  } catch (error) {
+    next(error.message);
   }
 });
+
+// app.get("/users/:userId/lists", async (req, res, next) => {
+//   try {
+//     const userId = parseInt(req.params.userId);
+//     console.log(userId);
+//     const user = await User.findByPk(userId, {
+//       include: [TodoList],
+//     });
+//     if (user) {
+//       console.log(user);
+//       res.send(user.TodoLists);
+//     } else {
+//       res.status(404).send("User not found");
+//     }
+//   } catch (e) {
+//     next(e);
+//   }
+// });
 
 app.post("/users/:userId/lists", async (req, res, next) => {
   try {
