@@ -59,7 +59,8 @@ app.get("/users/:userId/lists", async (req, res, next) => {
     if (!user) {
       res.status(404).send("User not found");
     } else {
-      res.send(user.TodoLists);
+      console.log(user.get({ plain: true }));
+      res.send(user.todoLists);
     }
   } catch (error) {
     next(error.message);
